@@ -6,28 +6,15 @@ var longest = require('longest');
 var rightPad = require('right-pad');
 var chalk = require('chalk');
 
+const LimitedInputPrompt = require('./LimitedInputPrompt');
 var filter = function(array) {
   return array.filter(function(x) {
     return x;
   });
 };
 
-var headerLength = function(answers) {
-  return (
-    answers.type.length + 2 + (answers.scope ? answers.scope.length + 2: 0) + answers.jira.length + 1
-  );
-};
-
-var maxSummaryLength = function(options, answers) {
-  return options.maxHeaderWidth - headerLength(answers);
-};
-
 var filterSubject = function(subject) {
   subject = subject.trim();
-  if (subject.charAt(0).toLowerCase() !== subject.charAt(0)) {
-    subject =
-      subject.charAt(0).toLowerCase() + subject.slice(1, subject.length);
-  }
   while (subject.endsWith('.')) {
     subject = subject.slice(0, subject.length - 1);
   }
@@ -48,6 +35,9 @@ module.exports = function(options) {
     };
   });
 
+  const minHeaderWidth = options.minHeaderWidth || 2;
+  const maxHeaderWidth = options.maxHeaderWidth || 72;
+
   return {
     // When a user runs `git cz`, prompter will
     // be executed. We pass you cz, which currently
@@ -61,6 +51,8 @@ module.exports = function(options) {
     // By default, we'll de-indent your commit
     // template and will keep empty lines.
     prompter: function(cz, commit) {
+      cz.registerPrompt('limitedInput', LimitedInputPrompt);
+
       // Let's ask some questions of the user
       // so that we can populate our commit
       // template.
@@ -102,36 +94,22 @@ module.exports = function(options) {
           }
         },
         {
-          type: 'input',
+          type: 'limitedInput',
           name: 'subject',
-          message: function(answers) {
-            return (
-              'Write a short, imperative tense description of the change (max ' +
-              maxSummaryLength(options, answers) +
-              ' chars):\n'
-            );
+          message: 'Write a short, imperative tense description of the change:',
+          maxLength: maxHeaderWidth,
+          leadingLabel: answers => {
+            let scope = '';
+
+            if (answers.scope && answers.scope !== 'none') {
+              scope = `(${answers.scope})`;
+            }
+
+            return `${answers.type}${scope}:`;
           },
-          default: options.defaultSubject,
-          validate: function(subject, answers) {
-            var filteredSubject = filterSubject(subject);
-            return filteredSubject.length == 0
-              ? 'subject is required'
-              : filteredSubject.length <= maxSummaryLength(options, answers)
-              ? true
-              : 'Subject length must be less than or equal to ' +
-                maxSummaryLength(options, answers) +
-                ' characters. Current length is ' +
-                filteredSubject.length +
-                ' characters.';
-          },
-          transformer: function(subject, answers) {
-            var filteredSubject = filterSubject(subject);
-            var color =
-              filteredSubject.length <= maxSummaryLength(options, answers)
-                ? chalk.green
-                : chalk.red;
-            return color('(' + filteredSubject.length + ') ' + subject);
-          },
+          validate: input =>
+            input.length >= minHeaderWidth ||
+            `The subject must have at least ${minHeaderWidth} characters`,
           filter: function(subject) {
             return filterSubject(subject);
           }
