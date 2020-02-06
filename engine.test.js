@@ -19,6 +19,7 @@ var type = 'func';
 var scope = 'everything';
 var jira = 'DAZ-123';
 var subject = 'testing123';
+const shortBody = 'a';
 var longBody =
   'a a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a' +
   'a a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a aa a' +
@@ -210,7 +211,9 @@ describe('commit message', function() {
         body: longBody,
         issues: longIssues
       })
-    ).to.equal(`${type}: ${jira} ${subject}\n\n${longBodySplit}\n\n${longIssuesSplit}`);
+    ).to.equal(
+      `${type}: ${jira} ${subject}\n\n${longBodySplit}\n\n${longIssuesSplit}`
+    );
   });
   it('header, long body and long issues w/ scope', function() {
     expect(
@@ -265,12 +268,9 @@ describe('validation', function() {
         type,
         scope,
         jira,
-        subject: longBody
+        subject: shortBody
       })
-    ).to.throw(
-      'length must be less than or equal to ' +
-        `${defaultOptions.maxLineWidth - type.length - scope.length - jira.length - 5}`
-    );
+    ).to.throw(`The subject must have at least 2 characters`);
   });
   it('empty subject', function() {
     expect(() =>
@@ -279,7 +279,7 @@ describe('validation', function() {
         scope,
         subject: ''
       })
-    ).to.throw('subject is required');
+    ).to.throw(`The subject must have at least 2 characters`);
   });
 });
 
@@ -338,49 +338,9 @@ describe('defaults', function() {
   });
 });
 
-describe('prompts', function() {
-  it('commit subject prompt for commit w/ out scope', function() {
-    expect(questionPrompt('subject', { type, jira })).to.contain(
-      `(max ${defaultOptions.maxHeaderWidth - type.length - jira.length - 3} chars)`
-    );
-  });
-  it('commit subject prompt for commit w/ scope', function() {
-    expect(questionPrompt('subject', { type, scope, jira })).to.contain(
-      `(max ${defaultOptions.maxHeaderWidth -
-        type.length -
-        scope.length -
-        jira.length -
-        5} chars)`
-    );
-  });
-});
-
-describe('transformation', function() {
-  it('subject w/ character count', () =>
-    expect(
-      questionTransformation('subject', {
-        type,
-        jira,
-        subject
-      })
-    ).to.equal(chalk.green(`(${subject.length}) ${subject}`)));
-  it('long subject w/ character count', () =>
-    expect(
-      questionTransformation('subject', {
-        type,
-        jira,
-        subject: longBody
-      })
-    ).to.equal(chalk.red(`(${longBody.length}) ${longBody}`)));
-});
-
 describe('filter', function() {
   it('lowercase scope', () =>
     expect(questionFilter('scope', 'HelloMatt')).to.equal('hellomatt'));
-  it('lowerfirst subject trimmed and trailing dots striped', () =>
-    expect(questionFilter('subject', '  A subject...  ')).to.equal(
-      'a subject'
-    ));
 });
 
 describe('when', function() {
@@ -494,7 +454,8 @@ function commitMessage(answers, options) {
             finalizer(answers);
           }
         };
-      }
+      },
+      registerPrompt: () => {}
     },
     function(message) {
       result = message;
@@ -532,7 +493,8 @@ function getQuestions(options) {
       return {
         then: function() {}
       };
-    }
+    },
+    registerPrompt: () => {}
   });
   return result;
 }

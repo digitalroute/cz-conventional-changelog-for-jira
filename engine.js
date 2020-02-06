@@ -97,6 +97,7 @@ module.exports = function(options) {
           type: 'limitedInput',
           name: 'subject',
           message: 'Write a short, imperative tense description of the change:',
+          default: options.defaultSubject,
           maxLength: maxHeaderWidth,
           leadingLabel: answers => {
             let scope = '';
