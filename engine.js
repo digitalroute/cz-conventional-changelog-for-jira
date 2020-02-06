@@ -100,13 +100,14 @@ module.exports = function(options) {
           default: options.defaultSubject,
           maxLength: maxHeaderWidth,
           leadingLabel: answers => {
+            const jira = answers.jira ? ` ${answers.jira}` : '';
             let scope = '';
 
             if (answers.scope && answers.scope !== 'none') {
               scope = `(${answers.scope})`;
             }
 
-            return `${answers.type}${scope}:`;
+            return `${answers.type}${scope}:${jira}`;
           },
           validate: input =>
             input.length >= minHeaderWidth ||
