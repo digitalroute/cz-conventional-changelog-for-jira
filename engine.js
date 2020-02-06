@@ -72,6 +72,7 @@ module.exports = function(options) {
           type: 'input',
           name: 'jira',
           message: 'Enter JIRA issue (DAZ-12345):',
+          when: !options.skipJiraIssue,
           default: '',
           validate: function(jira) {
             return /^[A-Z]+-[0-9]+$/.test(jira);

@@ -7,6 +7,7 @@ var configLoader = require('commitizen').configLoader;
 var config = configLoader.load();
 var options = {
   types: conventionalCommitTypes.types,
+  skipJiraIssue: process.env.CZ_SKIP_JIRA_ISSUE || config.skipJiraIssue,
   defaultType: process.env.CZ_TYPE || config.defaultType,
   defaultScope: process.env.CZ_SCOPE || config.defaultScope,
   defaultSubject: process.env.CZ_SUBJECT || config.defaultSubject,
