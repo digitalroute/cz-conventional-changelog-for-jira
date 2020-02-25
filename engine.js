@@ -159,7 +159,8 @@ module.exports = function(options) {
           type: 'confirm',
           name: 'isIssueAffected',
           message: 'Does this change affect any open issues?',
-          default: options.defaultIssues ? true : false
+          default: options.defaultIssues ? true : false,
+          when: options.skipJiraIssue
         },
         {
           type: 'input',
