@@ -47,7 +47,8 @@
   "config": {
     "commitizen": {
       "path": "./index.js",
-      "skipJiraIssue": true
+      "jiraMode": false,
+      "skipScope": true
     }
   },
   "publishConfig": {

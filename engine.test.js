@@ -90,24 +90,6 @@ describe('commit message', function() {
       })
     ).to.equal(`${type}(${scope}): ${jira} ${subject}\n\n${body}`);
   });
-  it('header and body w/ uppercase scope', function() {
-    var upperCaseScope = scope.toLocaleUpperCase();
-    expect(
-      commitMessage(
-        {
-          type,
-          scope: upperCaseScope,
-          jira,
-          subject,
-          body
-        },
-        {
-          ...defaultOptions,
-          disableScopeLowerCase: true
-        }
-      )
-    ).to.equal(`${type}(${upperCaseScope}): ${jira} ${subject}\n\n${body}`);
-  });
   it('header, body and issues w/ out scope', function() {
     expect(
       commitMessage({
@@ -332,9 +314,6 @@ describe('defaults', function() {
         })
       )
     ).to.equal(issues);
-  });
-  it('disableScopeLowerCase default', function() {
-    expect(questionDefault('disableScopeLowerCase')).to.be.undefined;
   });
 });
 

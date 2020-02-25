@@ -72,7 +72,7 @@ module.exports = function(options) {
           type: 'input',
           name: 'jira',
           message: 'Enter JIRA issue (DAZ-12345):',
-          when: !options.skipJiraIssue,
+          when: options.jiraMode,
           default: '',
           validate: function(jira) {
             return /^[A-Z]+-[0-9]+$/.test(jira);
@@ -89,9 +89,7 @@ module.exports = function(options) {
             'What is the scope of this change (e.g. component or file name): (press enter to skip)',
           default: options.defaultScope,
           filter: function(value) {
-            return options.disableScopeLowerCase
-              ? value.trim()
-              : value.trim().toLowerCase();
+            return value.trim().toLowerCase();
           }
         },
         {
@@ -197,8 +195,7 @@ module.exports = function(options) {
         var jira = answers.jira ? answers.jira + ' ' : '';
 
         // Hard limit this line in the validate
-        var head =
-          answers.type + scope + ': ' + jira + answers.subject;
+        var head = answers.type + scope + ': ' + jira + answers.subject;
 
         // Wrap these lines at options.maxLineWidth characters
         var body = answers.body ? wrap(answers.body, wrapOptions) : false;

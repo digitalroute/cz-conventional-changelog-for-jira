@@ -5,22 +5,35 @@ var conventionalCommitTypes = require('conventional-commit-types');
 var configLoader = require('commitizen').configLoader;
 
 var config = configLoader.load();
+
+function getEnvOrConfig(env, configVar, defaultValue) {
+  const isEnvSet = Boolean(env);
+  const isConfigSet = typeof configVar === 'boolean';
+
+  if (isEnvSet) return env === 'true';
+  if (isConfigSet) return configVar;
+  return defaultValue;
+}
+
 var options = {
   types: conventionalCommitTypes.types,
-  skipJiraIssue: process.env.CZ_SKIP_JIRA_ISSUE || config.skipJiraIssue,
-  skipScope: process.env.CZ_SKIP_SCOPE || config.skipScope,
+  jiraMode: getEnvOrConfig(process.env.CZ_JIRA_MODE, config.jiraMode, true),
+  skipScope: process.env.CZ_SKIP_SCOPE || config.skipScope || false,
   defaultType: process.env.CZ_TYPE || config.defaultType,
   defaultScope: process.env.CZ_SCOPE || config.defaultScope,
   defaultSubject: process.env.CZ_SUBJECT || config.defaultSubject,
   defaultBody: process.env.CZ_BODY || config.defaultBody,
   defaultIssues: process.env.CZ_ISSUES || config.defaultIssues,
-  disableScopeLowerCase:
-    process.env.DISABLE_SCOPE_LOWERCASE || config.disableScopeLowerCase,
   maxHeaderWidth:
     (process.env.CZ_MAX_HEADER_WIDTH &&
       parseInt(process.env.CZ_MAX_HEADER_WIDTH)) ||
     config.maxHeaderWidth ||
-    100,
+    72,
+  minHeaderWidth:
+    (process.env.CZ_MIN_HEADER_WIDTH &&
+      parseInt(process.env.CZ_MIN_HEADER_WIDTH)) ||
+    config.minHeaderWidth ||
+    2,
   maxLineWidth:
     (process.env.CZ_MAX_LINE_WIDTH &&
       parseInt(process.env.CZ_MAX_LINE_WIDTH)) ||
