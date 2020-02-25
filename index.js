@@ -8,6 +8,7 @@ var config = configLoader.load();
 var options = {
   types: conventionalCommitTypes.types,
   skipJiraIssue: process.env.CZ_SKIP_JIRA_ISSUE || config.skipJiraIssue,
+  skipScope: process.env.CZ_SKIP_SCOPE || config.skipScope,
   defaultType: process.env.CZ_TYPE || config.defaultType,
   defaultScope: process.env.CZ_SCOPE || config.defaultScope,
   defaultSubject: process.env.CZ_SUBJECT || config.defaultSubject,
