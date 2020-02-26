@@ -39,7 +39,7 @@ module.exports = function(options) {
   const minHeaderWidth = options.minHeaderWidth || 2;
   const maxHeaderWidth = options.maxHeaderWidth || 72;
 
-  const branchName = branch.sync();
+  const branchName = branch.sync() || '';
   const jiraIssueRegex = /(?<jiraIssue>\/[A-Z]+-\d+)/;
   const matchResult = branchName.match(jiraIssueRegex);
   const jiraIssue =
