@@ -1,6 +1,6 @@
 {
   "name": "@digitalroute/cz-conventional-changelog-for-jira",
-  "version": "0.0.0-semantically-released.0",
+  "version": "0.0.0-semantically-released",
   "description": "Commitizen adapter following the conventional-changelog format and also asking for JIRA issue.",
   "main": "index.js",
   "scripts": {

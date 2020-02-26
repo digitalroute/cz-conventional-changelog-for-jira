@@ -165,7 +165,7 @@ module.exports = function(options) {
           name: 'isIssueAffected',
           message: 'Does this change affect any open issues?',
           default: options.defaultIssues ? true : false,
-          when: options.skipJiraIssue
+          when: !options.jiraMode
         },
         {
           type: 'input',
