@@ -8,6 +8,8 @@ Part of the [commitizen](https://github.com/commitizen/cz-cli) family. Prompts f
 
 ## Quickstart
 
+### Installation
+
 ```bash
 npm install commitizen @digitalroute/cz-conventional-changelog-for-jira
 ```
@@ -26,6 +28,12 @@ and then add the following to package.json:
   }
 }
 ```
+
+### Usage
+
+<p align="center">
+	<image alt="Gif of terminal when using cz-conventional-changelog-for-jira" src="images/demo.gif" width="80%">
+</p>
 
 ## Configuration
 
