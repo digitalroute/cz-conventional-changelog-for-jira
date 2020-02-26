@@ -42,7 +42,8 @@ module.exports = function(options) {
   const branchName = branch.sync();
   const jiraIssueRegex = /(?<jiraIssue>\/[A-Z]+-\d+)/;
   const matchResult = branchName.match(jiraIssueRegex);
-  const { jiraIssue = '' } = matchResult.groups;
+  const jiraIssue =
+    matchResult && matchResult.groups && matchResult.groups.jiraIssue;
 
   return {
     // When a user runs `git cz`, prompter will
