@@ -18,7 +18,7 @@ function getEnvOrConfig(env, configVar, defaultValue) {
 const options = {
   types: conventionalCommitTypes.types,
   jiraMode: getEnvOrConfig(process.env.CZ_JIRA_MODE, config.jiraMode, true),
-  skipScope: process.env.CZ_SKIP_SCOPE || config.skipScope || false,
+  skipScope: getEnvOrConfig(process.env.CZ_SKIP_SCOPE, config.skipScope, true),
   defaultType: process.env.CZ_TYPE || config.defaultType,
   defaultScope: process.env.CZ_SCOPE || config.defaultScope,
   defaultSubject: process.env.CZ_SUBJECT || config.defaultSubject,
