@@ -7,6 +7,7 @@ var rightPad = require('right-pad');
 var chalk = require('chalk');
 const branch = require('git-branch');
 
+var defaults = require('./defaults');
 const LimitedInputPrompt = require('./LimitedInputPrompt');
 var filter = function(array) {
   return array.filter(function(x) {
@@ -26,7 +27,10 @@ var filterSubject = function(subject) {
 // We use Commonjs here, but ES6 or AMD would do just
 // fine.
 module.exports = function(options) {
-  var types = options.types;
+  var getFromOptionsOrDefaults = function(key) {
+    return options[key] || defaults[key];
+  };
+  var types = getFromOptionsOrDefaults('types');
 
   var length = longest(Object.keys(types)).length + 1;
   var choices = map(types, function(type, key) {
@@ -36,14 +40,18 @@ module.exports = function(options) {
     };
   });
 
-  const minHeaderWidth = options.minHeaderWidth || 2;
-  const maxHeaderWidth = options.maxHeaderWidth || 72;
+  const minHeaderWidth = getFromOptionsOrDefaults('minHeaderWidth');
+  const maxHeaderWidth = getFromOptionsOrDefaults('maxHeaderWidth');
 
   const branchName = branch.sync() || '';
   const jiraIssueRegex = /(?<jiraIssue>\/[A-Z]+-\d+)/;
   const matchResult = branchName.match(jiraIssueRegex);
   const jiraIssue =
     matchResult && matchResult.groups && matchResult.groups.jiraIssue;
+  const hasScopes =
+    options.scopes &&
+    Array.isArray(options.scopes) &&
+    options.scopes.length > 0;
 
   return {
     // When a user runs `git cz`, prompter will
@@ -78,7 +86,10 @@ module.exports = function(options) {
         {
           type: 'input',
           name: 'jira',
-          message: 'Enter JIRA issue (DAZ-12345):',
+          message:
+            'Enter JIRA issue (' +
+            getFromOptionsOrDefaults('jiraPrefix') +
+            '-12345):',
           when: options.jiraMode,
           default: jiraIssue ? jiraIssue.substring(1) : '',
           validate: function(jira) {
@@ -89,11 +100,15 @@ module.exports = function(options) {
           }
         },
         {
-          type: 'input',
+          type: hasScopes ? 'list' : 'input',
           name: 'scope',
           when: !options.skipScope,
+          choices: hasScopes ? options.scopes : undefined,
           message:
-            'What is the scope of this change (e.g. component or file name): (press enter to skip)',
+            'What is the scope of this change (e.g. component or file name): ' +
+            hasScopes
+              ? '(select from the list)'
+              : '(press enter to skip)',
           default: options.defaultScope,
           filter: function(value) {
             return value.trim().toLowerCase();

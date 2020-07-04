@@ -4,16 +4,13 @@ var engine = require('./engine');
 var mock = require('mock-require');
 var semver = require('semver');
 
-var types = require('./types').types;
+var types = require('./types');
+var defaults = require('./defaults');
 
 var expect = chai.expect;
 chai.should();
 
-var defaultOptions = {
-  types,
-  maxLineWidth: 100,
-  maxHeaderWidth: 100
-};
+var defaultOptions = defaults;
 
 var type = 'func';
 var scope = 'everything';
