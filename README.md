@@ -56,6 +56,8 @@ Like commitizen, you can specify the configuration of cz-conventional-changelog-
 | CZ_BODY              | defaultBody    | undefined | A default body.                                                                                                                                                       |
 | CZ_ISSUES            | defaultIssues  | undefined | A default issue.                                                                                                                                                      |
 
+## Dynamic Configuration
+
 Alternatively, if you want to create your own profile, you can use the _configurable_ approach.  
 Here is an example:  
 **./index.js**
@@ -67,9 +69,9 @@ const defaultTypes = require('@digitalroute/cz-conventional-changelog-for-jira/t
 module.exports = custom({
   types: {
     ...defaultTypes,
-    myCustomType: {
-      description: 'My custom type description',
-      title: 'My Custom'
+    perf: {
+      description: 'Improvements that will make your code perform better',
+      title: 'Performance'
     }
   },
   skipScope: false,
@@ -86,6 +88,11 @@ module.exports = custom({
   }
 }
 ```
+
+This example would:  
+* Display _"perf"_ as an extra commit type
+* Ask you to add a commit scope
+* Limit the scope selection to either `myScope` or `myScope2`
 
 List of all supported configurable options when using the _configurable_ approach:  
 | Key            | Default   | Description                                                                                                                                                           |
