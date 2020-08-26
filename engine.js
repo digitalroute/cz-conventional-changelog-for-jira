@@ -44,7 +44,7 @@ module.exports = function(options) {
   const maxHeaderWidth = getFromOptionsOrDefaults('maxHeaderWidth');
 
   const branchName = branch.sync() || '';
-  const jiraIssueRegex = /(?<jiraIssue>\/[A-Z]+-\d+)/;
+  const jiraIssueRegex = /(?<jiraIssue>(?<!([A-Z0-9]{1,10})-?)[A-Z0-9]+-\d+)/;
   const matchResult = branchName.match(jiraIssueRegex);
   const jiraIssue =
     matchResult && matchResult.groups && matchResult.groups.jiraIssue;
@@ -93,7 +93,7 @@ module.exports = function(options) {
           when: options.jiraMode,
           default: jiraIssue ? jiraIssue.substring(1) : '',
           validate: function(jira) {
-            return /^[A-Z]+-[0-9]+$/.test(jira);
+            return /^(?<!([A-Z0-9]{1,10})-?)[A-Z0-9]+-\d+$/.test(jira);
           },
           filter: function(jira) {
             return jira.toUpperCase();
