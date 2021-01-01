@@ -6,6 +6,7 @@ var longest = require('longest');
 var rightPad = require('right-pad');
 var chalk = require('chalk');
 const branch = require('git-branch');
+const boxen = require('boxen');
 
 var defaults = require('./defaults');
 const LimitedInputPrompt = require('./LimitedInputPrompt');
@@ -65,7 +66,7 @@ module.exports = function(options) {
     //
     // By default, we'll de-indent your commit
     // template and will keep empty lines.
-    prompter: function(cz, commit) {
+    prompter: function(cz, commit, testMode) {
       cz.registerPrompt('limitedInput', LimitedInputPrompt);
 
       // Let's ask some questions of the user
@@ -187,7 +188,7 @@ module.exports = function(options) {
           },
           default: options.defaultIssues ? options.defaultIssues : undefined
         }
-      ]).then(function(answers) {
+      ]).then(async function(answers) {
         var wrapOptions = {
           trim: true,
           cut: false,
@@ -215,7 +216,27 @@ module.exports = function(options) {
 
         var issues = answers.issues ? wrap(answers.issues, wrapOptions) : false;
 
-        commit(filter([head, body, breaking, issues]).join('\n\n'));
+        const fullCommit = filter([head, body, breaking, issues]).join('\n\n');
+
+        if (testMode) {
+          return commit(fullCommit);
+        }
+
+        console.log();
+        console.log(chalk.underline('Commit preview:'));
+        console.log(boxen(chalk.green(fullCommit), { padding: 1, margin: 1 }));
+
+        const { doCommit } = await cz.prompt([
+          {
+            type: 'confirm',
+            name: 'doCommit',
+            message: 'Are you sure that you want to commit?'
+          }
+        ]);
+
+        if (doCommit) {
+          commit(fullCommit);
+        }
       });
     }
   };

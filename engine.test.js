@@ -435,7 +435,8 @@ function commitMessage(answers, options) {
     },
     function(message) {
       result = message;
-    }
+    },
+    true
   );
   return result;
 }
