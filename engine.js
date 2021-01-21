@@ -90,11 +90,17 @@ module.exports = function(options) {
           message:
             'Enter JIRA issue (' +
             getFromOptionsOrDefaults('jiraPrefix') +
-            '-12345):',
+            '-12345)' +
+            options.jiraOptional
+              ? ' (optional)'
+              : '' + ':',
           when: options.jiraMode,
           default: jiraIssue || '',
           validate: function(jira) {
-            return /^(?<!([A-Z0-9]{1,10})-?)[A-Z0-9]+-\d+$/.test(jira);
+            return (
+              (options.jiraOptional && !jira) ||
+              /^(?<!([A-Z0-9]{1,10})-?)[A-Z0-9]+-\d+$/.test(jira)
+            );
           },
           filter: function(jira) {
             return jira.toUpperCase();

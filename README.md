@@ -55,11 +55,12 @@ Like commitizen, you can specify the configuration of cz-conventional-changelog-
 | CZ_SUBJECT           | defaultSubject | undefined | A default subject.                                                                                                                                                    |
 | CZ_BODY              | defaultBody    | undefined | A default body.                                                                                                                                                       |
 | CZ_ISSUES            | defaultIssues  | undefined | A default issue.                                                                                                                                                      |
+| CZ_JIRA_OPTIONAL     | jiraOptional   | false     | If this is set to true, you can leave the JIRA field blank.                                                                                                           |
 
 ## Dynamic Configuration
 
-Alternatively, if you want to create your own profile, you can use the _configurable_ approach.  
-Here is an example:  
+Alternatively, if you want to create your own profile, you can use the _configurable_ approach.
+Here is an example:
 **./index.js**
 ```javascript
 const custom = require('@digitalroute/cz-conventional-changelog-for-jira/configurable');
@@ -89,12 +90,12 @@ module.exports = custom({
 }
 ```
 
-This example would:  
+This example would:
 * Display _"perf"_ as an extra commit type
 * Ask you to add a commit scope
 * Limit the scope selection to either `myScope` or `myScope2`
 
-List of all supported configurable options when using the _configurable_ approach:  
+List of all supported configurable options when using the _configurable_ approach:
 | Key            | Default   | Description                                                                                                                                                           |
 | -------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | jiraMode       | true      | If this is set to true, CZ will ask for a Jira issue and put it in the commit head. If set to false CZ will ask for the issue in the end, and can be used for GitHub. |
@@ -110,6 +111,7 @@ List of all supported configurable options when using the _configurable_ approac
 | jiraPrefix     | 'DAZ'     | The default JIRA ticket prefix that will be displayed.                                                                                                                |
 | types          | ./types.js| A list (JS Object) of supported commit types.                                                                                                                         |
 | scopes         | undefined | A list (JS Array) of scopes that will be available for selection. Note that adding this will change the scope field from Inquirer 'input' to 'list'.                  |
+| jiraOptional   | false     | If this is set to true, you can leave the JIRA field blank.                                                                                                           |
 
 ### Commitlint
 

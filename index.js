@@ -47,7 +47,12 @@ const options = {
     (process.env.CZ_MAX_LINE_WIDTH &&
       parseInt(process.env.CZ_MAX_LINE_WIDTH)) ||
     config.maxLineWidth ||
-    defaults.maxLineWidth
+    defaults.maxLineWidth,
+  jiraOptional: getEnvOrConfig(
+    process.env.CZ_JIRA_OPTIONAL,
+    config.jiraMode,
+    defaults.jiraMode
+  )
 };
 
 (function(options) {

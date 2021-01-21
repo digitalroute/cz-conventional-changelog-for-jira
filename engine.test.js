@@ -238,6 +238,19 @@ describe('commit message', function() {
       `${type}(${scope}): ${jira} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${longIssuesSplit}`
     );
   });
+  it('skip jira task when optional', function() {
+    expect(
+      commitMessage(
+        {
+          type,
+          scope,
+          jira: '',
+          subject
+        },
+        { jiraOptional: true }
+      )
+    ).to.equal(`${type}(${scope}): ${subject}`);
+  });
 });
 
 describe('validation', function() {
@@ -260,6 +273,19 @@ describe('validation', function() {
       })
     ).to.throw(`The subject must have at least 2 characters`);
   });
+  it('empty jira if not optional', function() {
+    expect(() =>
+      commitMessage(
+        {
+          type,
+          scope,
+          jira: '',
+          subject
+        },
+        { jiraOptional: false }
+      )
+    ).to.throw(`Answer '' to question 'jira' was invalid`);
+  })
 });
 
 describe('defaults', function() {

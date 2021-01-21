@@ -7,5 +7,6 @@ module.exports = {
   maxHeaderWidth: 72,
   minHeaderWidth: 2,
   maxLineWidth: 100,
-  jiraPrefix: 'DAZ'
+  jiraPrefix: 'DAZ',
+  jiraOptional: false
 };
