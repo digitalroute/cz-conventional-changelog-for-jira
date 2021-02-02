@@ -152,6 +152,15 @@ module.exports = function(options) {
           default: false
         },
         {
+          type: 'confirm',
+          name: 'isBreaking',
+          message: 'You do know that this will bump the major version, are you sure?',
+          default: false,
+          when: function(answers) {
+            return answers.isBreaking;
+          }
+        },
+        {
           type: 'input',
           name: 'breaking',
           message: 'Describe the breaking changes:\n',
