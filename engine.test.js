@@ -285,7 +285,7 @@ describe('validation', function() {
         { jiraOptional: false }
       )
     ).to.throw(`Answer '' to question 'jira' was invalid`);
-  })
+  });
 });
 
 describe('defaults', function() {
@@ -443,6 +443,29 @@ describe('commitlint config header-max-length', function() {
       });
     });
   }
+});
+
+describe('questions', function() {
+  it('default jira question', function() {
+    expect(questionPrompt('jira')).to.be.eq('Enter JIRA issue (DAZ-12345):');
+  });
+  it('optional jira question', function() {
+    expect(questionPrompt('jira', [], { jiraOptional: true })).to.be.eq(
+      'Enter JIRA issue (DAZ-12345) (optional):'
+    );
+  });
+  it('scope with list', function() {
+    expect(
+      questionPrompt('scope', [], { scopes: ['scope1', 'scope2'] })
+    ).to.be.eq(
+      'What is the scope of this change (e.g. component or file name): (select from the list)'
+    );
+  });
+  it('scope without list', function() {
+    expect(questionPrompt('scope')).to.be.eq(
+      'What is the scope of this change (e.g. component or file name): (press enter to skip)'
+    );
+  });
 });
 
 function commitMessage(answers, options) {
