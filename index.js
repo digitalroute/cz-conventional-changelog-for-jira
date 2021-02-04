@@ -50,8 +50,8 @@ const options = {
     defaults.maxLineWidth,
   jiraOptional: getEnvOrConfig(
     process.env.CZ_JIRA_OPTIONAL,
-    config.jiraMode,
-    defaults.jiraMode
+    config.jiraOptional,
+    defaults.jiraOptional
   )
 };
 
