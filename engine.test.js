@@ -444,6 +444,7 @@ describe('commitlint config header-max-length', function() {
     });
   }
 });
+
 function commitMessage(answers, options) {
   options = options || defaultOptions;
   var result = null;
@@ -470,6 +471,7 @@ function commitMessage(answers, options) {
 function processQuestions(questions, answers, options) {
   for (var i in questions) {
     var question = questions[i];
+
     var answer = answers[question.name];
     var validation =
       answer === undefined || !question.validate

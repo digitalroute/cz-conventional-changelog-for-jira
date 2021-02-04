@@ -91,9 +91,8 @@ module.exports = function(options) {
             'Enter JIRA issue (' +
             getFromOptionsOrDefaults('jiraPrefix') +
             '-12345)' +
-            options.jiraOptional
-              ? ' (optional)'
-              : '' + ':',
+            (options.jiraOptional ? ' (optional)' : '') +
+            ':',
           when: options.jiraMode,
           default: jiraIssue || '',
           validate: function(jira) {
