@@ -52,7 +52,11 @@ const options = {
     process.env.CZ_JIRA_OPTIONAL,
     config.jiraOptional,
     defaults.jiraOptional
-  )
+  ),
+  jiraPrefix:
+    process.env.CZ_JIRA_PREFIX ||
+    config.jiraPrefix ||
+    defaults.jiraPrefix
 };
 
 (function(options) {

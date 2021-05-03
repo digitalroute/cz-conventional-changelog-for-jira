@@ -56,6 +56,7 @@ Like commitizen, you can specify the configuration of cz-conventional-changelog-
 | CZ_BODY              | defaultBody    | undefined | A default body.                                                                                                                                                       |
 | CZ_ISSUES            | defaultIssues  | undefined | A default issue.                                                                                                                                                      |
 | CZ_JIRA_OPTIONAL     | jiraOptional   | false     | If this is set to true, you can leave the JIRA field blank.                                                                                                           |
+| CZ_JIRA_PREFIX     | jiraPrefix   | "DAZ"     | If this is set it will be will be displayed as the default JIRA ticket prefix
 
 ## Dynamic Configuration
 
