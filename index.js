@@ -18,6 +18,7 @@ function getEnvOrConfig(env, configVar, defaultValue) {
 
 const options = {
   types: conventionalCommitTypes,
+  scopes: config.scopes,
   jiraMode: getEnvOrConfig(
     process.env.CZ_JIRA_MODE,
     config.jiraMode,
@@ -52,7 +53,11 @@ const options = {
     process.env.CZ_JIRA_OPTIONAL,
     config.jiraOptional,
     defaults.jiraOptional
-  )
+  ),
+  jiraPrefix:
+    process.env.CZ_JIRA_PREFIX ||
+    config.jiraPrefix ||
+    defaults.jiraPrefix
 };
 
 (function(options) {

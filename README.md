@@ -50,12 +50,14 @@ Like commitizen, you can specify the configuration of cz-conventional-changelog-
 | CZ_MIN_HEADER_WIDTH  | minHeaderWidth | 2         | This limits how short a commit message can be.                                                                                                                        |
 | CZ_MAX_LINE_WIDTH    | maxLineWidth   | 100       | Commit message bodies are automatically wrapped. This decides how long the lines will be.                                                                             |
 | CZ_SKIP_SCOPE        | skipScope      | true      | If scope should be used in commit messages.                                                                                                                           |
+|                      | scopes         | undefined | A list (JS Array) of scopes that will be available for selection. Note that adding this will change the scope field from Inquirer 'input' to 'list'.                  |
 | CZ_TYPE              | defaultType    | undefined | The default type.                                                                                                                                                     |
 | CZ_SCOPE             | defaultScope   | undefined | The default scope.                                                                                                                                                    |
 | CZ_SUBJECT           | defaultSubject | undefined | A default subject.                                                                                                                                                    |
 | CZ_BODY              | defaultBody    | undefined | A default body.                                                                                                                                                       |
 | CZ_ISSUES            | defaultIssues  | undefined | A default issue.                                                                                                                                                      |
 | CZ_JIRA_OPTIONAL     | jiraOptional   | false     | If this is set to true, you can leave the JIRA field blank.                                                                                                           |
+| CZ_JIRA_PREFIX       | jiraPrefix     | "DAZ"     | If this is set it will be will be displayed as the default JIRA ticket prefix                                                                                         |
 
 ## Dynamic Configuration
 
