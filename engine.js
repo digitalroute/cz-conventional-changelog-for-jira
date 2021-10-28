@@ -5,7 +5,7 @@ var map = require('lodash.map');
 var longest = require('longest');
 var rightPad = require('right-pad');
 var chalk = require('chalk');
-const branch = require('git-branch');
+const { execSync } = require('child_process');
 const boxen = require('boxen');
 
 var defaults = require('./defaults');
@@ -59,7 +59,7 @@ module.exports = function(options) {
   const minHeaderWidth = getFromOptionsOrDefaults('minHeaderWidth');
   const maxHeaderWidth = getFromOptionsOrDefaults('maxHeaderWidth');
 
-  const branchName = branch.sync() || '';
+  const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
   const jiraIssueRegex = /(?<jiraIssue>(?<!([A-Z0-9]{1,10})-?)[A-Z0-9]+-\d+)/;
   const matchResult = branchName.match(jiraIssueRegex);
   const jiraIssue =
