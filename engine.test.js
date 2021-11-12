@@ -238,6 +238,37 @@ describe('commit message', function() {
       `${type}(${scope}): ${jira} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${longIssuesSplit}`
     );
   });
+  it('header, body, breaking change, and issues w/ scope; exclamation mark enabled', function() {
+    expect(
+      commitMessage({
+        type,
+        scope,
+        jira,
+        subject,
+        body,
+        breaking,
+        issues
+      },
+        { ...defaultOptions, exclamationMark: true })
+    ).to.equal(
+      `${type}(${scope})!: ${jira} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issues}`
+    );
+  });
+  it('header, body, breaking change, and issues w/o scope; exclamation mark enabled', function() {
+    expect(
+      commitMessage({
+        type,
+        jira,
+        subject,
+        body,
+        breaking,
+        issues
+      },
+        { ...defaultOptions, exclamationMark: true })
+    ).to.equal(
+      `${type}!: ${jira} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issues}`
+    );
+  });
   it('skip jira task when optional', function() {
     expect(
       commitMessage(

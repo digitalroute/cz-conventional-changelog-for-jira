@@ -61,6 +61,7 @@ Like commitizen, you can specify the configuration of cz-conventional-changelog-
 | CZ_JIRA_LOCATION     | jiraLocation   | "pre-description" | Changes position of JIRA ID. Options: `pre-type`, `pre-description`, `post-description`                                                                               |
 | CZ_JIRA_PREPEND      | jiraPrepend    | ""                | Prepends JIRA ID with an optional decorator. e.g.: `[DAZ-1234`                                                                                                        |
 | CZ_JIRA_APPEND       | jiraAppend     | ""                | Appends JIRA ID with an optional decorator. e.g.: `DAZ-1234]`                                                                                                         |
+| CZ_EXCLAMATION_MARK  | exclamationMark| false             | On breaking changes, adds an exclamation mark (!) after the scope, e.g.: `type(scope)!: break stuff`. When activated, reduces the effective allowed header length by 1.  |
 
 ## Dynamic Configuration
 
@@ -120,6 +121,9 @@ List of all supported configurable options when using the _configurable_ approac
 | jiraLocation   | "pre-description"        | Changes position of JIRA ID. Options: `pre-type`, `pre-description`, `post-description`                                                                               |
 | jiraPrepend    | ""                       | Prepends JIRA ID with an optional decorator. e.g.: `[DAZ-1234`                                                                                                        |
 | jiraAppend     | ""                       | Appends JIRA ID with an optional decorator. e.g.: `DAZ-1234]`                                                                                                         |
+| exclamationMark| false                    | On breaking changes, adds an exclamation mark (!) after the scope, e.g.: `type(scope)!: break stuff`. When activated, reduces the effective allowed header length by 1.  |
+
+
 ### Commitlint
 
 If using the [commitlint](https://github.com/conventional-changelog/commitlint) js library, the "maxHeaderWidth" configuration property will default to the configuration of the "header-max-length" rule instead of the hard coded value of 72. This can be ovewritten by setting the 'maxHeaderWidth' configuration in package.json or the CZ_MAX_HEADER_WIDTH environment variable.

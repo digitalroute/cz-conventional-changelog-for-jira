@@ -138,7 +138,7 @@ module.exports = function(options) {
           name: 'subject',
           message: 'Write a short, imperative tense description of the change:',
           default: options.defaultSubject,
-          maxLength: maxHeaderWidth,
+          maxLength: maxHeaderWidth - (options.exclamationMark ? 1 : 0),
           leadingLabel: answers => {
             const jira = answers.jira ? ` ${answers.jira}` : '';
             let scope = '';
@@ -226,6 +226,8 @@ module.exports = function(options) {
 
         // parentheses are only needed when a scope is present
         var scope = answers.scope ? '(' + answers.scope + ')' : '';
+        const addExclamationMark = options.exclamationMark && answers.breaking;
+        scope = addExclamationMark ? scope + '!' : scope;
 
         // Get Jira issue prepend and append decorators
         var prepend = options.jiraPrepend || ''
