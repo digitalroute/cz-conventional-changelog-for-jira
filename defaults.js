@@ -4,6 +4,7 @@ module.exports = {
   types: conventionalCommitTypes,
   jiraMode: true,
   skipScope: true,
+  confirmScope: false,
   maxHeaderWidth: 72,
   minHeaderWidth: 2,
   maxLineWidth: 100,

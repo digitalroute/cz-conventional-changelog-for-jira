@@ -29,6 +29,16 @@ const options = {
     config.skipScope,
     defaults.skipScope
   ),
+  confirmScope: getEnvOrConfig(
+    process.env.CZ_CONFIRM_SCOPE,
+    config.confirmScope,
+    defaults.confirmScope
+  ),
+  confirmScopeMessage: getEnvOrConfig(
+    process.env.CZ_CONFIRM_SCOPE_MESSAGE,
+    config.confirmScopeMessage,
+    undefined
+  ),
   defaultType: process.env.CZ_TYPE || config.defaultType,
   defaultScope: process.env.CZ_SCOPE || config.defaultScope,
   defaultSubject: process.env.CZ_SUBJECT || config.defaultSubject,
