@@ -59,7 +59,7 @@ module.exports = function(options) {
   const minHeaderWidth = getFromOptionsOrDefaults('minHeaderWidth');
   const maxHeaderWidth = getFromOptionsOrDefaults('maxHeaderWidth');
 
-  const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+  const branchName = execSync('git branch --show-current').toString().trim();
   const jiraIssueRegex = /(?<jiraIssue>(?<!([A-Z0-9]{1,10})-?)[A-Z0-9]+-\d+)/;
   const matchResult = branchName.match(jiraIssueRegex);
   const jiraIssue =
