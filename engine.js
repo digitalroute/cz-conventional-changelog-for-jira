@@ -63,7 +63,7 @@ module.exports = function(options) {
   const maxHeaderWidth = getFromOptionsOrDefaults('maxHeaderWidth');
 
   const branchName = execSync('git branch --show-current').toString().trim();
-  const jiraIssueRegex = /(?<jiraIssue>(?<!([A-Z0-9]{1,10})-?)[A-Z0-9]+-\d+)/;
+  const jiraIssueRegex = /(?<jiraIssue>(?<!([a-zA-Z0-9]{1,10})-?)[a-zA-Z0-9]+-\d+)/;
   const matchResult = branchName.match(jiraIssueRegex);
   const jiraIssue =
     matchResult && matchResult.groups && matchResult.groups.jiraIssue;
