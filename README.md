@@ -1,6 +1,8 @@
 # cz-conventional-changelog-for-jira
 
-Part of the [commitizen](https://github.com/commitizen/cz-cli) family. Prompts for [conventional changelog](https://github.com/conventional-changelog/conventional-changelog) standard and also prompts for a mandatory JIRA issue.
+Part of the [@ryansonshine/commitizen](https://github.com/ryansonshine/cz-cli) family. Prompts for [conventional changelog](https://github.com/conventional-changelog/conventional-changelog) standard and also prompts for a mandatory JIRA issue.
+
+**Note**: [commitizen](https://www.npmjs.com/package/commitizen) has been replaced by [@ryansonshine/commitizen](https://github.com/ryansonshine/cz-cli) because the latest version published in NPM has critical security issues and it appears that the developers can't publish new versions to NPM. [@ryansonshine/commitizen](https://github.com/ryansonshine/cz-cli) has fixed the critical issues and published a newer version in NPM. Read [this comment](https://github.com/commitizen/cz-cli/issues/914#issuecomment-1131383383) for more information.
 
 [![npm version](https://img.shields.io/npm/v/@digitalroute/cz-conventional-changelog-for-jira.svg?style=flat-square)](https://www.npmjs.org/package/@digitalroute/cz-conventional-changelog-for-jira)
 [![npm downloads](https://img.shields.io/npm/dm/@digitalroute/cz-conventional-changelog-for-jira.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@digitalroute/cz-conventional-changelog-for-jira)
@@ -17,7 +19,7 @@ Part of the [commitizen](https://github.com/commitizen/cz-cli) family. Prompts f
 ### Installation
 
 ```bash
-npm install commitizen @digitalroute/cz-conventional-changelog-for-jira
+npm install @ryansonshine/commitizen @digitalroute/cz-conventional-changelog-for-jira
 ```
 
 and then add the following to package.json:

@@ -3,7 +3,7 @@
 var engine = require('./engine');
 var conventionalCommitTypes = require('./types');
 var defaults = require('./defaults');
-var configLoader = require('commitizen').configLoader;
+var configLoader = require('@ryansonshine/commitizen').configLoader;
 
 var config = configLoader.load();
 

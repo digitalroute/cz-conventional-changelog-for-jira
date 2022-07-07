@@ -630,7 +630,7 @@ describe('commitlint config header-max-length', function() {
     });
 
     it('with commitizen config override', function() {
-      mock('commitizen', {
+      mock('@ryansonshine/commitizen', {
         configLoader: {
           load: function() {
             return {

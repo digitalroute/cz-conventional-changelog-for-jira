@@ -21,10 +21,11 @@
   "author": "Marcus Johansson <polarn@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "boxen": "^5.0.0",
+    "@ryansonshine/commitizen": "^4.2.8",
+    "@ryansonshine/cz-conventional-changelog": "^3.3.4",
+    "boxen": "^5.1.2",
     "chalk": "^2.4.1",
-    "commitizen": "^4.2.4",
-    "inquirer": "^6.5.2",
+    "inquirer": "^8.2.4",
     "lodash.map": "^4.5.1",
     "longest": "^2.0.1",
     "right-pad": "^1.0.1",
@@ -35,11 +36,10 @@
     "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
     "cosmiconfig": "^5.2.1",
-    "cz-conventional-changelog": "^3.1.0",
-    "mocha": "^6.2.0",
+    "mocha": "^10.0.0",
     "mock-require": "^3.0.3",
     "prettier": "^1.15.3",
-    "semantic-release": "^17.4.3",
+    "semantic-release": "^19.0.3",
     "semver": "^6.2.0"
   },
   "optionalDependencies": {
