@@ -1,5 +1,6 @@
 var engine = require('./engine');
+var defaults = require('./defaults');
 
 module.exports = function(overridenOptions) {
-  return engine(overridenOptions);
+  return engine({ ...defaults, ...overridenOptions });
 };
