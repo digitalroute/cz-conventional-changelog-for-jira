@@ -21,10 +21,10 @@
   "author": "Marcus Johansson <polarn@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@ryansonshine/commitizen": "^4.2.8",
-    "@ryansonshine/cz-conventional-changelog": "^3.3.4",
     "boxen": "^5.1.2",
     "chalk": "^2.4.1",
+    "commitizen": "^4.2.6",
+    "cz-conventional-changelog": "^3.3.0",
     "inquirer": "^8.2.4",
     "lodash.map": "^4.5.1",
     "longest": "^2.0.1",

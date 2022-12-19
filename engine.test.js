@@ -663,11 +663,13 @@ describe('commit message', function() {
           jira,
           subject,
           body,
-          breaking,
+          breaking
         },
         { ...defaultOptions, jiraLocation: 'post-body' }
       )
-    ).to.equal(`${type}(${scope}): ${subject}\n\n${body}\n\n${jiraUpperCase}\n\n${breakingChange}${breaking}`);
+    ).to.equal(
+      `${type}(${scope}): ${subject}\n\n${body}\n\n${jiraUpperCase}\n\n${breakingChange}${breaking}`
+    );
   });
   it('jiraPrepend decorator', function() {
     expect(
@@ -903,7 +905,7 @@ describe('commitlint config header-max-length', function() {
     });
 
     it('with commitizen config override', function() {
-      mock('@ryansonshine/commitizen', {
+      mock('commitizen', {
         configLoader: {
           load: function() {
             return {

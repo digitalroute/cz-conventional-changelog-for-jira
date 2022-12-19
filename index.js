@@ -3,7 +3,7 @@
 var engine = require('./engine');
 var conventionalCommitTypes = require('./types');
 var defaults = require('./defaults');
-var configLoader = require('@ryansonshine/commitizen').configLoader;
+var configLoader = require('commitizen').configLoader;
 
 var config = configLoader.load();
 
@@ -75,26 +75,20 @@ const options = {
     defaults.jiraOptional
   ),
   jiraPrefix:
-    process.env.CZ_JIRA_PREFIX ||
-    config.jiraPrefix ||
-    defaults.jiraPrefix,
+    process.env.CZ_JIRA_PREFIX || config.jiraPrefix || defaults.jiraPrefix,
   jiraLocation:
     process.env.CZ_JIRA_LOCATION ||
     config.jiraLocation ||
     defaults.jiraLocation,
   jiraPrepend:
-    process.env.CZ_JIRA_PREPEND ||
-    config.jiraPrepend ||
-    defaults.jiraPrepend,
+    process.env.CZ_JIRA_PREPEND || config.jiraPrepend || defaults.jiraPrepend,
   jiraAppend:
-    process.env.CZ_JIRA_APPEND ||
-    config.jiraAppend ||
-    defaults.jiraAppend,
-    exclamationMark: getEnvOrConfig(
-      process.env.CZ_EXCLAMATION_MARK,
-      config.exclamationMark,
-      defaults.exclamationMark
-    )
+    process.env.CZ_JIRA_APPEND || config.jiraAppend || defaults.jiraAppend,
+  exclamationMark: getEnvOrConfig(
+    process.env.CZ_EXCLAMATION_MARK,
+    config.exclamationMark,
+    defaults.exclamationMark
+  )
 };
 
 (function(options) {
