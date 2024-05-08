@@ -133,7 +133,9 @@ module.exports = function(options) {
           message:
             'Enter JIRA issue (' +
             getFromOptionsOrDefaults('jiraPrefix') +
-            '-12345)' +
+            '-' +
+            getFromOptionsOrDefaults('jiraNumber') +
+            ')' +
             (options.jiraOptional ? ' (optional)' : '') +
             ':',
           when: options.jiraMode,

@@ -76,6 +76,8 @@ const options = {
   ),
   jiraPrefix:
     process.env.CZ_JIRA_PREFIX || config.jiraPrefix || defaults.jiraPrefix,
+  jiraNumber:
+    process.env.CZ_JIRA_NUMBER || config.jiraNumber || defaults.jiraNumber,
   jiraLocation:
     process.env.CZ_JIRA_LOCATION ||
     config.jiraLocation ||

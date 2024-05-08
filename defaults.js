@@ -12,6 +12,7 @@ module.exports = {
   minHeaderWidth: 2,
   maxLineWidth: 100,
   jiraPrefix: 'DAZ',
+  jiraNumber: '12345',
   jiraOptional: false,
   jiraLocation: 'pre-description',
   jiraPrepend: '',
