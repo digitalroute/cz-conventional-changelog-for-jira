@@ -4,13 +4,17 @@ Part of the [commitizen/cz-cli](https://github.com/commitizen/cz-cli) family. Pr
 
 [![npm version](https://img.shields.io/npm/v/@digitalroute/cz-conventional-changelog-for-jira.svg?style=flat-square)](https://www.npmjs.org/package/@digitalroute/cz-conventional-changelog-for-jira)
 [![npm downloads](https://img.shields.io/npm/dm/@digitalroute/cz-conventional-changelog-for-jira.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@digitalroute/cz-conventional-changelog-for-jira)
-[![Build Status](https://img.shields.io/travis/digitalroute/cz-conventional-changelog-for-jira.svg?style=flat-square)](https://travis-ci.org/digitalroute/cz-conventional-changelog-for-jira)
+[![Release](https://img.shields.io/github/actions/workflow/status/digitalroute/cz-conventional-changelog-for-jira/release.yml?style=flat-square)](https://github.com/digitalroute/cz-conventional-changelog-for-jira/actions/workflows/release.yml)
 
 ## Features
 
 - Works seamlessly with semantic-release 🚀
 - Works seamlessly with Jira smart commits
 - Automatically detects the Jira issue from the branch name
+
+## Requirements
+
+Node.js **>= 22**.
 
 ## Quickstart
 
@@ -49,10 +53,10 @@ Like commitizen, you can specify the configuration of cz-conventional-changelog-
 | CZ_MAX_HEADER_WIDTH  | maxHeaderWidth  | 72                | This limits how long a commit message head can be.                                                                                                                      |
 | CZ_MIN_HEADER_WIDTH  | minHeaderWidth  | 2                 | This limits how short a commit message can be.                                                                                                                          |
 | CZ_MAX_LINE_WIDTH    | maxLineWidth    | 100               | Commit message bodies are automatically wrapped. This decides how long the lines will be.                                                                               |
-| CZ_SKIP_SCOPE        | skipScope       | true              | If scope should be used in commit messages.                                                                                                                             |
-| CZ_SKIP_TYPE         | skipType        | false             | If type should be used in commit messages.                                                                                                                              |
-| CZ_SKIP_DESCRIPTION  | skipDescription | false             | If description should be used in commit messages.                                                                                                                       |
-| CZ_SKIP_BREAKING     | skipBreaking    | false             | If breaking changes should be used in commit messages.                                                                                                                  |
+| CZ_SKIP_SCOPE        | skipScope       | true              | If `true`, the scope prompt is skipped.                                                                                                                                 |
+| CZ_SKIP_TYPE         | skipType        | false             | If `true`, the type prompt is skipped.                                                                                                                                  |
+| CZ_SKIP_DESCRIPTION  | skipDescription | false             | If `true`, the body/description prompt is skipped.                                                                                                                      |
+| CZ_SKIP_BREAKING     | skipBreaking    | false             | If `true`, the breaking-changes prompt is skipped.                                                                                                                      |
 |                      | scopes          | undefined         | A list (JS Array) of scopes that will be available for selection. Note that adding this will change the scope field from Inquirer 'input' to 'list'.                    |
 | CZ_TYPE              | defaultType     | undefined         | The default type.                                                                                                                                                       |
 | CZ_SCOPE             | defaultScope    | undefined         | The default scope.                                                                                                                                                      |
@@ -154,7 +158,10 @@ List of all supported configurable options when using the _configurable_ approac
 | maxHeaderWidth  | 72                | This limits how long a commit message head can be.                                                                                                                                                                                           |
 | minHeaderWidth  | 2                 | This limits how short a commit message can be.                                                                                                                                                                                               |
 | maxLineWidth    | 100               | Commit message bodies are automatically wrapped. This decides how long the lines will be.                                                                                                                                                    |
-| skipScope       | true              | If scope should be used in commit messages.                                                                                                                                                                                                  |
+| skipScope       | true              | If `true`, the scope prompt is skipped.                                                                                                                                                                                                      |
+| skipType        | false             | If `true`, the type prompt is skipped.                                                                                                                                                                                                       |
+| skipDescription | false             | If `true`, the body/description prompt is skipped.                                                                                                                                                                                           |
+| skipBreaking    | false             | If `true`, the breaking-changes prompt is skipped.                                                                                                                                                                                           |
 | defaultType     | undefined         | The default type.                                                                                                                                                                                                                            |
 | defaultScope    | undefined         | The default scope.                                                                                                                                                                                                                           |
 | defaultSubject  | undefined         | A default subject.                                                                                                                                                                                                                           |

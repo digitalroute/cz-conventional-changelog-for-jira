@@ -2,52 +2,75 @@
   "name": "@digitalroute/cz-conventional-changelog-for-jira",
   "version": "0.0.0-semantically-released",
   "description": "Commitizen adapter following the conventional-changelog format and also asking for JIRA issue.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "commonjs",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./configurable": {
+      "types": "./dist/configurable.d.ts",
+      "default": "./dist/configurable.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "commit": "git-cz",
-    "test": "mocha *.test.js",
-    "format": "prettier --write *.js",
+    "compile": "rm -rf dist && tsc --noEmit && tsc -p tsconfig.build.json",
+    "test": "mocha --require tsx/cjs 'src/**/*.test.ts'",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run compile",
     "semantic-release": "semantic-release"
   },
   "homepage": "https://github.com/digitalroute/cz-conventional-changelog-for-jira",
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitalroute/cz-conventional-changelog-for-jira.git"
+    "url": "git+https://github.com/digitalroute/cz-conventional-changelog-for-jira.git"
   },
   "engineStrict": true,
   "engines": {
-    "node": ">= 10"
+    "node": ">= 22"
   },
   "author": "Marcus Johansson <polarn@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "boxen": "^5.1.2",
-    "chalk": "^2.4.1",
-    "commitizen": "^4.2.6",
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "inquirer": "^8.2.4",
-    "lodash.map": "^4.5.1",
-    "longest": "^2.0.1",
-    "right-pad": "^1.0.1",
-    "word-wrap": "^1.0.3"
+    "inquirer": "^8.2.7",
+    "word-wrap": "^1.2.5"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.7",
-    "chai": "^4.2.0",
-    "cosmiconfig": "^5.2.1",
-    "mocha": "^10.0.0",
+    "@types/chai": "^5.2.3",
+    "@types/inquirer": "^8.2.12",
+    "@types/mocha": "^10.0.10",
+    "@types/mock-require": "^3.0.0",
+    "@types/node": "^22.19.17",
+    "@types/semver": "^7.7.1",
+    "chai": "^6.2.2",
+    "cosmiconfig": "^9.0.1",
+    "mocha": "^11.7.5",
     "mock-require": "^3.0.3",
-    "prettier": "^1.15.3",
-    "semantic-release": "^19.0.3",
-    "semver": "^6.2.0"
+    "prettier": "^3.8.3",
+    "semantic-release": "^25.0.3",
+    "semver": "^7.7.4",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   },
   "optionalDependencies": {
-    "@commitlint/load": ">6.1.1"
+    "@commitlint/load": "^20.0.0"
   },
   "config": {
     "commitizen": {
-      "path": "./index.js",
+      "path": "./dist/index.js",
       "jiraMode": false,
       "skipScope": true
     }
