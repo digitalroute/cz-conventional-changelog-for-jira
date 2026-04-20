@@ -1,6 +1,7 @@
-var conventionalCommitTypes = require('./types');
+import conventionalCommitTypes = require('./types');
+import type { Options } from './options';
 
-module.exports = {
+const defaults: Options = {
   types: conventionalCommitTypes,
   jiraMode: true,
   skipScope: true,
@@ -16,5 +17,7 @@ module.exports = {
   jiraLocation: 'pre-description',
   jiraPrepend: '',
   jiraAppend: '',
-  exclamationMark: false
+  exclamationMark: false,
 };
+
+export = defaults;
