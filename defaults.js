@@ -16,5 +16,6 @@ module.exports = {
   jiraLocation: 'pre-description',
   jiraPrepend: '',
   jiraAppend: '',
+  githubRepo: 'digitalroute/dr-dazzler-team',
   exclamationMark: false
 };

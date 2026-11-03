@@ -36,21 +36,13 @@ var longBodySplit =
   '\n' +
   longBody.slice(defaultOptions.maxLineWidth * 2, longBody.length).trim();
 var body = 'A quick brown fox jumps over the dog';
-var issues = 'a issues is not a person that kicks things';
-var longIssues =
-  'b b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b' +
-  'b b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b' +
-  'b b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b bb b';
+var githubRepo = 'digitalroute/dr-dazzler-team';
+var issues = '123';
+var issuesFooter = `Refs: ${githubRepo}#${issues}`;
+var hashIssues = '#456';
+var hashIssuesFooter = `Refs: ${githubRepo}#456`;
 var breakingChange = 'BREAKING CHANGE: ';
 var breaking = 'asdhdfkjhbakjdhjkashd adhfajkhs asdhkjdsh ahshd';
-var longIssuesSplit =
-  longIssues.slice(0, defaultOptions.maxLineWidth).trim() +
-  '\n' +
-  longIssues
-    .slice(defaultOptions.maxLineWidth, defaultOptions.maxLineWidth * 2)
-    .trim() +
-  '\n' +
-  longIssues.slice(defaultOptions.maxLineWidth * 2, longIssues.length).trim();
 
 describe('commit message', function() {
   it('only header w/ out scope and w/ out type', function() {
@@ -166,7 +158,7 @@ describe('commit message', function() {
         },
         skipTypeOptions
       )
-    ).to.equal(`${jiraUpperCase} ${subject}\n\n${body}\n\n${issues}`);
+    ).to.equal(`${jiraUpperCase} ${subject}\n\n${body}\n\n${issuesFooter}`);
   });
   it('header, body and issues w/ out scope and w/ type', function() {
     expect(
@@ -177,7 +169,9 @@ describe('commit message', function() {
         body,
         issues
       })
-    ).to.equal(`${type}: ${jiraUpperCase} ${subject}\n\n${body}\n\n${issues}`);
+    ).to.equal(
+      `${type}: ${jiraUpperCase} ${subject}\n\n${body}\n\n${issuesFooter}`
+    );
   });
   it('header, body and issues w/ scope and w/ out type', function() {
     expect(
@@ -192,7 +186,7 @@ describe('commit message', function() {
         skipTypeOptions
       )
     ).to.equal(
-      `(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${issues}`
+      `(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${issuesFooter}`
     );
   });
   it('header, body and issues w/ scope and w/ type', function() {
@@ -206,36 +200,36 @@ describe('commit message', function() {
         issues
       })
     ).to.equal(
-      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${issues}`
+      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${issuesFooter}`
     );
   });
-  it('header, body and long issues w/ out scope and w/ out type', function() {
+  it('header, body and #-prefixed issues w/ out scope and w/ out type', function() {
     expect(
       commitMessage(
         {
           jira,
           subject,
           body,
-          issues: longIssues
+          issues: hashIssues
         },
         skipTypeOptions
       )
-    ).to.equal(`${jiraUpperCase} ${subject}\n\n${body}\n\n${longIssuesSplit}`);
+    ).to.equal(`${jiraUpperCase} ${subject}\n\n${body}\n\n${hashIssuesFooter}`);
   });
-  it('header, body and long issues w/ out scope and w/ type', function() {
+  it('header, body and #-prefixed issues w/ out scope and w/ type', function() {
     expect(
       commitMessage({
         type,
         jira,
         subject,
         body,
-        issues: longIssues
+        issues: hashIssues
       })
     ).to.equal(
-      `${type}: ${jiraUpperCase} ${subject}\n\n${body}\n\n${longIssuesSplit}`
+      `${type}: ${jiraUpperCase} ${subject}\n\n${body}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, body and long issues w/ scope and w/ out type', function() {
+  it('header, body and #-prefixed issues w/ scope and w/ out type', function() {
     expect(
       commitMessage(
         {
@@ -243,15 +237,15 @@ describe('commit message', function() {
           jira,
           subject,
           body,
-          issues: longIssues
+          issues: hashIssues
         },
         skipTypeOptions
       )
     ).to.equal(
-      `(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${longIssuesSplit}`
+      `(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, body and long issues w/ scope and w/ tyoe', function() {
+  it('header, body and #-prefixed issues w/ scope and w/ tyoe', function() {
     expect(
       commitMessage({
         type,
@@ -259,10 +253,10 @@ describe('commit message', function() {
         jira,
         subject,
         body,
-        issues: longIssues
+        issues: hashIssues
       })
     ).to.equal(
-      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${longIssuesSplit}`
+      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${body}\n\n${hashIssuesFooter}`
     );
   });
   it('header and long body w/ out scope and w/ out type', function() {
@@ -324,7 +318,9 @@ describe('commit message', function() {
         },
         skipTypeOptions
       )
-    ).to.equal(`${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issues}`);
+    ).to.equal(
+      `${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issuesFooter}`
+    );
   });
   it('header, long body and issues w/ out scope and w/ type', function() {
     expect(
@@ -336,7 +332,7 @@ describe('commit message', function() {
         issues
       })
     ).to.equal(
-      `${type}: ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issues}`
+      `${type}: ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issuesFooter}`
     );
   });
   it('header, long body and issues w/ scope and w/ out type', function() {
@@ -352,7 +348,7 @@ describe('commit message', function() {
         skipTypeOptions
       )
     ).to.equal(
-      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issues}`
+      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issuesFooter}`
     );
   });
   it('header, long body and issues w/ scope and w/ type', function() {
@@ -366,38 +362,38 @@ describe('commit message', function() {
         issues
       })
     ).to.equal(
-      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issues}`
+      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${issuesFooter}`
     );
   });
-  it('header, long body and long issues w/ out scope and w/ out type', function() {
+  it('header, long body and #-prefixed issues w/ out scope and w/ out type', function() {
     expect(
       commitMessage(
         {
           jira,
           subject,
           body: longBody,
-          issues: longIssues
+          issues: hashIssues
         },
         skipTypeOptions
       )
     ).to.equal(
-      `${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${longIssuesSplit}`
+      `${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, long body and long issues w/ out scope and w/ type', function() {
+  it('header, long body and #-prefixed issues w/ out scope and w/ type', function() {
     expect(
       commitMessage({
         type,
         jira,
         subject,
         body: longBody,
-        issues: longIssues
+        issues: hashIssues
       })
     ).to.equal(
-      `${type}: ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${longIssuesSplit}`
+      `${type}: ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, long body and long issues w/ scope and w/ out type', function() {
+  it('header, long body and #-prefixed issues w/ scope and w/ out type', function() {
     expect(
       commitMessage(
         {
@@ -405,15 +401,15 @@ describe('commit message', function() {
           jira,
           subject,
           body: longBody,
-          issues: longIssues
+          issues: hashIssues
         },
         skipTypeOptions
       )
     ).to.equal(
-      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${longIssuesSplit}`
+      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, long body and long issues w/ scope and w/ type', function() {
+  it('header, long body and #-prefixed issues w/ scope and w/ type', function() {
     expect(
       commitMessage({
         type,
@@ -421,13 +417,13 @@ describe('commit message', function() {
         jira,
         subject,
         body: longBody,
-        issues: longIssues
+        issues: hashIssues
       })
     ).to.equal(
-      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${longIssuesSplit}`
+      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, long body, breaking change, and long issues w/ scope', function() {
+  it('header, long body, breaking change, and #-prefixed issues w/ scope', function() {
     expect(
       commitMessage({
         scope,
@@ -435,13 +431,13 @@ describe('commit message', function() {
         subject,
         body: longBody,
         breaking,
-        issues: longIssues
+        issues: hashIssues
       })
     ).to.equal(
-      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${longIssuesSplit}`
+      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, long body, breaking change, and long issues w/ scope and w/ type', function() {
+  it('header, long body, breaking change, and #-prefixed issues w/ scope and w/ type', function() {
     expect(
       commitMessage({
         type,
@@ -450,13 +446,13 @@ describe('commit message', function() {
         subject,
         body: longBody,
         breaking,
-        issues: longIssues
+        issues: hashIssues
       })
     ).to.equal(
-      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${longIssuesSplit}`
+      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, long body, breaking change (with prefix entered), and long issues w/ scope and w/ out type', function() {
+  it('header, long body, breaking change (with prefix entered), and #-prefixed issues w/ scope and w/ out type', function() {
     expect(
       commitMessage(
         {
@@ -465,15 +461,15 @@ describe('commit message', function() {
           subject,
           body: longBody,
           breaking: `${breakingChange}${breaking}`,
-          issues: longIssues
+          issues: hashIssues
         },
         skipTypeOptions
       )
     ).to.equal(
-      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${longIssuesSplit}`
+      `(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${hashIssuesFooter}`
     );
   });
-  it('header, long body, breaking change (with prefix entered), and long issues w/ scope and w/ type', function() {
+  it('header, long body, breaking change (with prefix entered), and #-prefixed issues w/ scope and w/ type', function() {
     expect(
       commitMessage({
         type,
@@ -482,10 +478,10 @@ describe('commit message', function() {
         subject,
         body: longBody,
         breaking: `${breakingChange}${breaking}`,
-        issues: longIssues
+        issues: hashIssues
       })
     ).to.equal(
-      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${longIssuesSplit}`
+      `${type}(${scope}): ${jiraUpperCase} ${subject}\n\n${longBodySplit}\n\n${breakingChange}${breaking}\n\n${hashIssuesFooter}`
     );
   });
   it('header, body, breaking change, and issues w/ scope and w/o type; exclamation mark enabled', function() {
@@ -502,7 +498,7 @@ describe('commit message', function() {
         { ...skipTypeOptions, exclamationMark: true }
       )
     ).to.equal(
-      `(${scope})!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issues}`
+      `(${scope})!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issuesFooter}`
     );
   });
   it('header, body, breaking change, and issues w/ scope and w/ type; exclamation mark enabled', function() {
@@ -520,7 +516,7 @@ describe('commit message', function() {
         { ...defaultOptions, exclamationMark: true }
       )
     ).to.equal(
-      `${type}(${scope})!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issues}`
+      `${type}(${scope})!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issuesFooter}`
     );
   });
   it('header, body, breaking change, and issues w/o scope and w/o type; exclamation mark enabled', function() {
@@ -536,7 +532,7 @@ describe('commit message', function() {
         { ...skipTypeOptions, exclamationMark: true }
       )
     ).to.equal(
-      `!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issues}`
+      `!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issuesFooter}`
     );
   });
   it('header, body, breaking change, and issues w/o scope and w/ type; exclamation mark enabled', function() {
@@ -553,7 +549,7 @@ describe('commit message', function() {
         { ...defaultOptions, exclamationMark: true }
       )
     ).to.equal(
-      `${type}!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issues}`
+      `${type}!: ${jiraUpperCase} ${subject}\n\n${body}\n\n${breakingChange}${breaking}\n\n${issuesFooter}`
     );
   });
   it('skip jira task when optional', function() {
@@ -736,6 +732,38 @@ describe('commit message', function() {
   });
 });
 
+describe('github issue', function() {
+  const githubOptions = { ...defaultOptions, jiraMode: false };
+  it('header without jira issue and refs footer', function() {
+    expect(
+      commitMessage({ type, subject, body, issues }, githubOptions)
+    ).to.equal(`${type}: ${subject}\n\n${body}\n\n${issuesFooter}`);
+  });
+  it('strips leading # from issue number', function() {
+    expect(
+      commitMessage({ type, subject, issues: hashIssues }, githubOptions)
+    ).to.equal(`${type}: ${subject}\n\n${hashIssuesFooter}`);
+  });
+  it('custom githubRepo', function() {
+    expect(
+      commitMessage(
+        { type, subject, issues },
+        { ...githubOptions, githubRepo: 'digitalroute/other-repo' }
+      )
+    ).to.equal(`${type}: ${subject}\n\nRefs: digitalroute/other-repo#123`);
+  });
+  it('rejects non-numeric issue', function() {
+    expect(() =>
+      commitMessage({ type, subject, issues: 'abc' }, githubOptions)
+    ).to.throw('Enter an issue number, e.g. 123');
+  });
+  it('rejects empty issue', function() {
+    expect(() =>
+      commitMessage({ type, subject, issues: '' }, githubOptions)
+    ).to.throw('Enter an issue number, e.g. 123');
+  });
+});
+
 describe('validation', function() {
   it('subject exceeds max length', function() {
     expect(() =>
@@ -837,14 +865,11 @@ describe('when', function() {
         isBreaking: true
       })
     ).to.be.true);
-  it('issues by default', () =>
-    expect(questionWhen('issues', {})).to.be.undefined);
-  it('issues when isIssueAffected', () =>
-    expect(
-      questionWhen('issues', {
-        isIssueAffected: true
-      })
-    ).to.be.true);
+  it('issues not asked in jira mode', () =>
+    expect(getQuestion('issues').when).to.be.false);
+  it('issues asked when jira mode is off', () =>
+    expect(getQuestion('issues', customOptions({ jiraMode: false })).when).to.be
+      .true);
 });
 
 describe('commitlint config header-max-length', function() {
@@ -936,6 +961,16 @@ describe('questions', function() {
     expect(questionPrompt('jira', [], { jiraOptional: true })).to.be.eq(
       'Enter JIRA issue (DAZ-12345) (optional):'
     );
+  });
+  it('github issue question', function() {
+    expect(questionPrompt('issues')).to.be.eq(
+      'Enter GitHub issue number (digitalroute/dr-dazzler-team#123):'
+    );
+  });
+  it('github issue question with custom repo', function() {
+    expect(
+      questionPrompt('issues', [], { githubRepo: 'digitalroute/other-repo' })
+    ).to.be.eq('Enter GitHub issue number (digitalroute/other-repo#123):');
   });
   it('scope with list', function() {
     expect(

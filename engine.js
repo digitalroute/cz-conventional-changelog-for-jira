@@ -224,32 +224,22 @@ module.exports = function(options) {
         },
 
         {
-          type: 'confirm',
-          name: 'isIssueAffected',
-          message: 'Does this change affect any open issues?',
-          default: options.defaultIssues ? true : false,
-          when: !options.jiraMode
-        },
-        {
-          type: 'input',
-          name: 'issuesBody',
-          default: '-',
-          message:
-            'If issues are closed, the commit requires a body. Please enter a longer description of the commit itself:\n',
-          when: function(answers) {
-            return (
-              answers.isIssueAffected && !answers.body && !answers.breakingBody
-            );
-          }
-        },
-        {
           type: 'input',
           name: 'issues',
-          message: 'Add issue references (e.g. "fix #123", "re #123".):\n',
-          when: function(answers) {
-            return answers.isIssueAffected;
+          message:
+            'Enter GitHub issue number (' +
+            getFromOptionsOrDefaults('githubRepo') +
+            '#123):',
+          when: !options.jiraMode,
+          default: options.defaultIssues ? options.defaultIssues : undefined,
+          validate: function(issue) {
+            return (
+              /^#?\d+$/.test(issue.trim()) || 'Enter an issue number, e.g. 123'
+            );
           },
-          default: options.defaultIssues ? options.defaultIssues : undefined
+          filter: function(issue) {
+            return issue.trim().replace(/^#/, '');
+          }
         }
       ]).then(async function(answers) {
         var wrapOptions = {
@@ -291,7 +281,12 @@ module.exports = function(options) {
           : '';
         breaking = breaking ? wrap(breaking, wrapOptions) : false;
 
-        var issues = answers.issues ? wrap(answers.issues, wrapOptions) : false;
+        var issues = answers.issues
+          ? 'Refs: ' +
+            getFromOptionsOrDefaults('githubRepo') +
+            '#' +
+            answers.issues
+          : false;
 
         const fullCommit = filter([head, body, breaking, issues]).join('\n\n');
 

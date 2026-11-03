@@ -84,6 +84,8 @@ const options = {
     process.env.CZ_JIRA_PREPEND || config.jiraPrepend || defaults.jiraPrepend,
   jiraAppend:
     process.env.CZ_JIRA_APPEND || config.jiraAppend || defaults.jiraAppend,
+  githubRepo:
+    process.env.CZ_GITHUB_REPO || config.githubRepo || defaults.githubRepo,
   exclamationMark: getEnvOrConfig(
     process.env.CZ_EXCLAMATION_MARK,
     config.exclamationMark,
