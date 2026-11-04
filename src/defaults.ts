@@ -17,6 +17,7 @@ const defaults: Options = {
   jiraLocation: 'pre-description',
   jiraPrepend: '',
   jiraAppend: '',
+  githubRepo: 'digitalroute/dr-dazzler-team',
   exclamationMark: false,
 };
 

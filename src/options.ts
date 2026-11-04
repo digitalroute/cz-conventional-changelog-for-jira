@@ -25,6 +25,7 @@ export interface Options {
   jiraLocation: JiraLocation;
   jiraPrepend: string;
   jiraAppend: string;
+  githubRepo: string;
   exclamationMark: boolean;
   scopes?: string[];
   defaultType?: string;
@@ -43,7 +44,5 @@ export interface Answers {
   body?: string;
   isBreaking?: boolean;
   breaking?: string;
-  isIssueAffected?: boolean;
-  issuesBody?: string;
   issues?: string;
 }
