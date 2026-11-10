@@ -1,53 +1,57 @@
-'format cjs';
+import { configLoader } from 'commitizen';
 
-var engine = require('./engine');
-var conventionalCommitTypes = require('./types');
-var defaults = require('./defaults');
-var configLoader = require('commitizen').configLoader;
+import engine = require('./engine');
+import conventionalCommitTypes = require('./types');
+import defaults = require('./defaults');
+import type { Options, JiraLocation } from './options';
 
-var config = configLoader.load();
+const config = configLoader.load() as Partial<Options>;
 
-function getEnvOrConfig(env, configVar, defaultValue) {
+function getEnvOrConfig(
+  env: string | undefined,
+  configVar: boolean | undefined,
+  defaultValue: boolean,
+): boolean {
   const isEnvSet = Boolean(env);
   const isConfigSet = typeof configVar === 'boolean';
 
   if (isEnvSet) return env === 'true';
-  if (isConfigSet) return configVar;
+  if (isConfigSet) return configVar as boolean;
   return defaultValue;
 }
 
-const options = {
+const options: Options = {
   types: conventionalCommitTypes,
   scopes: config.scopes,
   jiraMode: getEnvOrConfig(
     process.env.CZ_JIRA_MODE,
     config.jiraMode,
-    defaults.jiraMode
+    defaults.jiraMode,
   ),
   skipScope: getEnvOrConfig(
     process.env.CZ_SKIP_SCOPE,
     config.skipScope,
-    defaults.skipScope
+    defaults.skipScope,
   ),
   skipType: getEnvOrConfig(
     process.env.CZ_SKIP_TYPE,
     config.skipType,
-    defaults.skipType
+    defaults.skipType,
   ),
   skipDescription: getEnvOrConfig(
     process.env.CZ_SKIP_DESCRIPTION,
     config.skipDescription,
-    defaults.skipDescription
+    defaults.skipDescription,
   ),
   skipBreaking: getEnvOrConfig(
     process.env.CZ_SKIP_BREAKING,
     config.skipBreaking,
-    defaults.skipBreaking
+    defaults.skipBreaking,
   ),
   customScope: getEnvOrConfig(
     process.env.CZ_CUSTOM_SCOPE,
     config.customScope,
-    defaults.customScope
+    defaults.customScope,
   ),
   defaultType: process.env.CZ_TYPE || config.defaultType,
   defaultScope: process.env.CZ_SCOPE || config.defaultScope,
@@ -72,14 +76,13 @@ const options = {
   jiraOptional: getEnvOrConfig(
     process.env.CZ_JIRA_OPTIONAL,
     config.jiraOptional,
-    defaults.jiraOptional
+    defaults.jiraOptional,
   ),
   jiraPrefix:
     process.env.CZ_JIRA_PREFIX || config.jiraPrefix || defaults.jiraPrefix,
-  jiraLocation:
-    process.env.CZ_JIRA_LOCATION ||
+  jiraLocation: (process.env.CZ_JIRA_LOCATION ||
     config.jiraLocation ||
-    defaults.jiraLocation,
+    defaults.jiraLocation) as JiraLocation,
   jiraPrepend:
     process.env.CZ_JIRA_PREPEND || config.jiraPrepend || defaults.jiraPrepend,
   jiraAppend:
@@ -87,16 +90,20 @@ const options = {
   exclamationMark: getEnvOrConfig(
     process.env.CZ_EXCLAMATION_MARK,
     config.exclamationMark,
-    defaults.exclamationMark
-  )
+    defaults.exclamationMark,
+  ),
 };
 
-(function(options) {
+(function (options: Options) {
   try {
-    var commitlintLoad = require('@commitlint/load');
-    commitlintLoad().then(function(clConfig) {
+    const commitlintLoad = require('@commitlint/load').default;
+    commitlintLoad().then(function (clConfig: {
+      rules?: Record<string, unknown>;
+    }) {
       if (clConfig.rules) {
-        var maxHeaderLengthRule = clConfig.rules['header-max-length'];
+        const maxHeaderLengthRule = clConfig.rules['header-max-length'] as
+          | [number, string, number]
+          | undefined;
         if (
           typeof maxHeaderLengthRule === 'object' &&
           maxHeaderLengthRule.length >= 3 &&
@@ -107,7 +114,10 @@ const options = {
         }
       }
     });
-  } catch (err) {}
+  } catch {
+    // @commitlint/load not installed; skip
+  }
 })(options);
 
-module.exports = engine(options);
+const adapter: engine.Prompter = engine(options);
+export = adapter;
